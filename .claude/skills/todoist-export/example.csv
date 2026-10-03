@@ -1,0 +1,5 @@
+TYPE,CONTENT,DESCRIPTION,PRIORITY,INDENT,AUTHOR,RESPONSIBLE,DATE,DATE_LANG,TIMEZONE,DURATION,DURATION_UNIT,DEADLINE,DEADLINE_LANG
+section,Communication and language,,,,,,,,,,,,
+task,"Narrate nappy change and dressing, naming each body part @communication","Goal (7 to 9 months): Babbles with consonants and turns to her name",4,1,,,2026-10-05,en,,15,minute,,
+section,Dogs,,,,,,,,,,,,
+task,Flea and tick treatment for all three dogs @dogs,Monthly routine,3,1,,,every month starting 2026-10-10,en,,10,minute,,

@@ -1,0 +1,48 @@
+# Memory graph schema.
+# Every file under memory/nodes/<type>/<slug>.md is one NODE.
+# Its id is "<type>/<slug>" and must match its path.
+# Typed edges live in the `links` frontmatter list; [[type/slug]] in the body
+# becomes an untyped `mentions` edge. This maps 1:1 onto a property graph
+# (Neo4j, Memgraph, Kuzu, etc.): node label = type, edge type = rel.
+version: 1
+
+node_types:
+  person:   A human (family, friends, professionals).
+  animal:   An animal in our care (dogs, livestock).
+  place:    A physical location (the land, a field, a building, a town).
+  project:  Finite effort with an outcome and an end (a quarterly plan, a build).
+  area:     Ongoing responsibility with no end date (Willow's education, the land).
+  goal:     A desired outcome, ideally measurable or observable.
+  decision: A choice we made, with the reasoning, so we don't re-litigate it.
+  concept:  An idea, framework or body of knowledge (EYFS, rotational grazing).
+  resource: A tool, service, book, link or file (Todoist, a CSV, a website).
+  event:    Something that happens at a point in time (vet visit, milestone).
+  routine:  Something that recurs (weekly review, worming schedule).
+  note:     Anything that doesn't fit yet. Promote it to a better type later.
+
+statuses: [active, paused, done, archived, superseded]
+
+relations:
+  # family / care
+  parent_of:   {from: [person], to: [person]}
+  child_of:    {from: [person], to: [person]}
+  cares_for:   {from: [person], to: [person, animal, place]}
+  owns:        {from: [person], to: [animal, place, resource]}
+  lives_at:    {from: [person, animal], to: [place]}
+  # structure
+  part_of:     {from: "*", to: "*"}
+  located_at:  {from: [event, place, resource, animal], to: [place]}
+  belongs_to:  {from: [project, goal, routine], to: [area, project]}
+  # intent
+  supports:    {from: [project, routine, resource, decision, goal], to: [goal, area, project]}
+  depends_on:  {from: [project, goal, routine], to: "*"}
+  uses:        {from: [project, routine, area], to: [resource, concept]}
+  follows:     {from: [project, area, routine], to: [concept, decision]}
+  # history
+  decided_in:  {from: [decision], to: [project, event, area]}
+  supersedes:  {from: "*", to: "*"}
+  happened_at: {from: [event], to: [place]}
+  # catch-all
+  about:       {from: "*", to: "*"}
+  relates_to:  {from: "*", to: "*"}
+  mentions:    {from: "*", to: "*"}   # generated from [[links]] in the body

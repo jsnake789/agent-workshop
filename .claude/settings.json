@@ -1,0 +1,14 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd \"$CLAUDE_PROJECT_DIR\" && python3 tools/memory.py index >/dev/null && cat memory/INDEX.md"
+          }
+        ]
+      }
+    ]
+  }
+}
